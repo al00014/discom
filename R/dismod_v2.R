@@ -58,7 +58,7 @@ dismod_v2<-function(pops,
                     age_range=c(0,1,seq(5,85,by=5)),
                     end_age=85,
                     plots=TRUE){
-        message('Assuming duration=1/hr !!')
+        message('Assuming duration=1/hr - hf !!')
         if(length(age_range)!=length(pops)){
                 stop('Please ensure age_range complies with input data!')
         }
