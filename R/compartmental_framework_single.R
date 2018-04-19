@@ -1,7 +1,7 @@
 #' compartmental_framework_single function
 #'
 #' This function estimates a single compartmental system with only Stock, birth_rate (flowing in rate) and 
-#' mortality_rate (flowing out rate)
+#' mortality_rate (flowing out rate). This function is sort of a toy example for setting up the background of the package.
 #'
 #' @param birth_rate a parameter for model, can be a number or a range of numbers, must NOT be a negative value.
 #' @param mortality_rate a parameter for model, can be a number or a range of numbers, must NOT be a negative value.
@@ -13,6 +13,23 @@
 #' @keywords compartmental framework
 #' @export
 #' @examples
+#' Example 1: (taking only one number for parameters)
+#' compartmental_framework_single(birth_rate=0.01,
+#'                                mortality_rate=0.015,
+#'                                Stock=1,
+#'                                age=85)
+#' 
+#' 
+#' 
+#' Example 2: (taking a range of numbers for parameters) 
+#'compartmental_framework_single(birth_rate=seq(0.05,0.01,length.out = length(seq(1,85,by=0.5))),
+#'                               mortality_rate=seq(0.01,0.015,length.out = length(seq(1,85,by=0.5))),
+#'                               constant=FALSE,
+#'                               Stock=1,
+#'                               age=85)
+#'
+#'
+							   
 compartmental_framework_single<-function(birth_rate,
                                          mortality_rate,
                                          constant=TRUE,
