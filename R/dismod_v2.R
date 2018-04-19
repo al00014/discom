@@ -1,4 +1,4 @@
-#' dismod_v1 function
+#' dismod_v2 function
 #'
 #' This function simulates the process behind DisMod-II (developed by WHO, available at www.who.int/evidence/dismod, for windows-PC only) and DisMod-MR (developed by IHME). Function in current forms only consider Stock and Condition (which is used in DisMod-MR), leaving out the Dead group (which is used in DisMod-II).
 #' 
@@ -8,7 +8,7 @@
 #'
 #' The function in current forms only take in pops, alldeath_rate, condition_death_rate, condition_incidence_rate and duration where these arguments have an exact match in vector length with each other.
 #'
-#' Also, this model calculates remission with the equation: remission = 1/duration (adapted from the book by Abraham D. Flaxman, title "An Integrative Metaregression Framework for Descriptive Epidemiology", ISBN-13: 978-0295991849). 
+#' Also, this model calculates remission with the equation: remission = 1/duration - fatality (adapted from DisMod-II). fatality is computed as: fatality = (all cause mortality - mortality)*(Stock+Condition)/Condition.
 #'
 #' The real dismod software actually takes in three of the following epidemiological
 #' variables: incidence, remission, case fatality (or RR), prevalence, mortality, and generates the rest via the integrating system modeling.
@@ -32,7 +32,7 @@
 #' @export
 #' @examples
 #' data('experiment1')
-#' dismod_v1(pops=experiment1$population,
+#' dismod_v2(pops=experiment1$population,
 #'          alldeath_rate=experiment1$ACD_rate,
 #'          condition_death_rate=experiment1$CD_rate,
 #'          condition_incidence_rate=experiment1$CI_rate,
@@ -47,7 +47,7 @@
 #'
 #'
 							   
-dismod_v1<-function(pops,
+dismod_v2<-function(pops,
                     alldeath_rate,
                     condition_death_rate,
                     condition_incidence_rate,
@@ -93,14 +93,14 @@ dismod_v1<-function(pops,
                 hm<-condition_death_rate[i]
                 hi<-condition_incidence_rate[i]
                 hf<-(hmall-hm)*(Stock+Condition)/Condition
-                hr<-1/duration[i]
+                hr<-1/duration[i]-hf
                 res[[i]]<-deSolve::ode(y=inits,times=time_var,func = equation,
-                              parms = c(hi=hi,
-                                        hm=hm,
-                                        hr=hr,
-                                        hf=hf)
-                              
-                              )
+                                       parms = c(hi=hi,
+                                                 hm=hm,
+                                                 hr=hr,
+                                                 hf=hf)
+                                       
+                )
         }
         #cout_index<-1
         new_df<-data.frame()
@@ -127,7 +127,7 @@ dismod_v1<-function(pops,
                 ggplot2::geom_line(ggplot2::aes(y=y,x=age))+#+theme_bw()
                 ggplot2::ylab(label="Rates")+
                 ggplot2::xlab(label="Age (years)")#+
-                #ggplot2::ylim(c(0,y_lim))
+        #ggplot2::ylim(c(0,y_lim))
         title2 <- bquote("Remission rate")
         #subtit1 <- bquote(list(hb==.(parameters[1])#,~gamma==.(parameters[2])
         #))
@@ -186,8 +186,8 @@ dismod_v1<-function(pops,
         
         if(plots==TRUE){
                 final_plots<-gridExtra::grid.arrange(plot1,plot2,plot5,
-                                          plot4,plot3,
-                                          layout_matrix=matrix(c(1,2,3,4,5,3),byrow = TRUE,ncol=3))
+                                                     plot4,plot3,
+                                                     layout_matrix=matrix(c(1,2,3,4,5,3),byrow = TRUE,ncol=3))
                 print(final_plots)
                 return(list(adjusted_data=new_df))
         } else{
@@ -198,3 +198,4 @@ dismod_v1<-function(pops,
         #return(list(plot_ls=final_plots,
         #            adjusted_data=new_df))
 }
+
