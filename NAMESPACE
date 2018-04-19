@@ -2,3 +2,4 @@
 
 export(compartmental_framework_single)
 export(dismod_v1)
+export(dismod_v2)
