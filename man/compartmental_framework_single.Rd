@@ -12,7 +12,7 @@ compartmental_framework_single(birth_rate, mortality_rate, constant = TRUE,
 
 \item{mortality_rate}{a parameter for model, can be a number or a range of numbers, must NOT be a negative value.}
 
-\item{constant}{a bool parameter indicating whether the input parameters are a range of numbers or just one single number.}
+\item{constant}{a boolean parameter indicating whether the input parameters are a range of numbers or just one single number.}
 
 \item{Stock}{an initial value for the compartmental model.}
 

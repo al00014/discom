@@ -31,11 +31,12 @@
 #' @keywords compartmental framework, dismod
 #' @export
 #' @examples
-#' dismod_v1(pops=population,
-#'          alldeath_rate=ACD_rate,
-#'          condition_death_rate=CD_rate,
-#'          condition_incidence_rate=CI_rate,
-#'          duration=CDuration,
+#' data('experiment1')
+#' dismod_v1(pops=experiment1$population,
+#'          alldeath_rate=experiment1$ACD_rate,
+#'          condition_death_rate=experiment1$CD_rate,
+#'          condition_incidence_rate=experiment1$CI_rate,
+#'          duration=experiment1$CDuration,
 #'          Stock=10000,
 #'          Condition=5,
 #'          start_age=0,
@@ -197,3 +198,5 @@ dismod_v1<-function(pops,
         #return(list(plot_ls=final_plots,
         #            adjusted_data=new_df))
 }
+
+#devtools::use_data(WHO_LE_table)

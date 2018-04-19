@@ -5,7 +5,7 @@
 #'
 #' @param birth_rate a parameter for model, can be a number or a range of numbers, must NOT be a negative value.
 #' @param mortality_rate a parameter for model, can be a number or a range of numbers, must NOT be a negative value.
-#' @param constant a bool parameter indicating whether the input parameters are a range of numbers or just one single number.
+#' @param constant a boolean parameter indicating whether the input parameters are a range of numbers or just one single number.
 #' @param Stock an initial value for the compartmental model.
 #' @param age specifying the extend of x-axis.
 #' @param ...
@@ -113,7 +113,7 @@ compartmental_framework_single<-function(birth_rate,
                 
                 #parameters=c(hb=birth_rate,hm=mortality_rate)
                 if(length(birth_rate)>1 & length(mortality_rate)==1){
-                        warning('Length of birth_rate is bigger than 1, assuming birth_rate is variant across time.')
+                        message('Length of birth_rate is bigger than 1, assuming birth_rate is variant across time.')
                         res <- vector(length(birth_rate),mode="list")
                         for(i in seq_along(birth_rate)){
                                 res[[i]]<-deSolve::ode(y=inits,times=time_var,func = equation,
@@ -123,7 +123,7 @@ compartmental_framework_single<-function(birth_rate,
                         plot2_data<-data.frame(age=time_var,y=rep(mortality_rate,times=length(time_var)))
                         
                 } else if(length(birth_rate)==1 & length(mortality_rate)>1){
-                        warning('Length of mortality_rate is bigger than 1, assuming mortality_rate is variant across time.')
+                        message('Length of mortality_rate is bigger than 1, assuming mortality_rate is variant across time.')
                         res <- vector(length(mortality_rate),mode="list")
                         for(i in seq_along(mortality_rate)){
                                 res[[i]]<-deSolve::ode(y=inits,times=time_var,func = equation,
@@ -133,7 +133,7 @@ compartmental_framework_single<-function(birth_rate,
                         plot1_data<-data.frame(age=time_var,y=rep(birth_rate,times=length(time_var)) )
                         plot2_data<-data.frame(age=time_var,y=mortality_rate) #rep(mortality_rate,times=length(time_var)))
                 } else if(length(birth_rate)>1 & length(mortality_rate)>1){
-                        warning('Lengths of birth_rate and mortality_rate are bigger than 1, assuming birth_rate and mortality_rate are variant across time.')
+                        message('Lengths of birth_rate and mortality_rate are bigger than 1, assuming birth_rate and mortality_rate are variant across time.')
                         res <- vector(length(mortality_rate),mode="list")
                         for(i in seq_along(mortality_rate)){
                                 res[[i]]<-deSolve::ode(y=inits,times=time_var,func = equation,
