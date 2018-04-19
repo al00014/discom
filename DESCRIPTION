@@ -2,12 +2,13 @@ Package: discom
 Title: A package for calculating adjusted prevalence in epidemiological data
 Version: 0.0.0.0001
 Authors@R: person("Antonio", "Lam", email = "linxiao@mail2.sysu.edu.cn", role = c("aut", "cre"))
-Description: Calculating epidemiological parameters for integrating system (A.K.A. compartmental framework). But currently it is just a SIMPLIFIED version of dismod 2 and dismod-mr
+Description: Calculating epidemiological parameters for integrating system (A.K.A. compartmental framework). But currently it is just a SIMPLIFIED version of dismod 2 and dismod-mr.
 Depends: R (>= 3.3.0)
 License: What license is it under?
 Encoding: UTF-8
 Imports:
 	parallel,
 	ggplot2,
-	deSolve
+	deSolve,
+	gridExtra
 LazyData: true
